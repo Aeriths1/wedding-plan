@@ -1,0 +1,1056 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<title>婚礼安排确认单</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:72px}
+:root{--paper:#f5ede0;--card:#fffaf2;--ink:#2a211c;--soft:rgba(42,33,28,.66);--red:#a8321f;--gold:#b48a4f;--gold-ink:#7d5a2a;--line:rgba(42,33,28,.16);
+  --serif:"Songti SC","STSong","Noto Serif SC","Source Han Serif SC",serif;--sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif}
+body{min-height:100vh;font:17px/1.6 var(--sans);color:var(--ink);background:var(--paper);
+  background-image:radial-gradient(circle at 15% 0%,rgba(168,50,31,.07),transparent 42%),radial-gradient(circle at 100% 28%,rgba(180,138,79,.11),transparent 36%);background-attachment:fixed}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+h1,h2,h3,h4,.serif{font-family:var(--serif)}
+
+.steps{position:sticky;top:0;z-index:5;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding:12px max(14px,calc(50% - 330px)) 12px;background:linear-gradient(var(--paper) 78%,rgba(245,237,224,0))}
+.steps::-webkit-scrollbar{display:none}
+.steps button{flex:none;white-space:nowrap;padding:7px 12px;font-size:14.5px;border:1px solid transparent;color:var(--soft)}
+.steps button[aria-current]{color:var(--red);border-color:var(--red);font-weight:600}
+
+.wrap{max-width:680px;margin:0 auto;padding:0 18px calc(120px + env(safe-area-inset-bottom))}
+.mast{display:flex;align-items:center;gap:14px;padding:16px 0 4px}
+.mast .xi{display:inline-grid;place-items:center;width:38px;height:38px;border:1.5px solid var(--red);color:var(--red);font:22px var(--serif);transform:rotate(45deg);flex:none}
+.mast .xi span{transform:rotate(-45deg)}
+.mast b{font:600 16px var(--serif);letter-spacing:.24em;color:var(--red)}
+
+.head{padding:20px 0 6px;border-bottom:1px solid var(--line);position:relative}
+.head::after{content:"";position:absolute;left:0;bottom:-2px;width:44px;height:3px;background:var(--red)}
+.head .no{font:15px var(--serif);color:var(--red);letter-spacing:.3em}
+.head h2{font-size:30px;font-weight:700;letter-spacing:.04em;margin-top:2px;line-height:1.3}
+.head p{font-size:15px;color:var(--soft);margin:6px 0 14px}
+
+.q{margin-top:28px}
+.q.split{padding-top:24px;border-top:1px dashed var(--gold)}
+.q h3{font-size:19px;line-height:1.4}
+.q > p,.note{font-size:14.5px;color:var(--soft);margin-top:6px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.tag{display:inline-block;font:12.5px/1 var(--sans);padding:5px 8px;white-space:nowrap;vertical-align:2px;border:1px solid var(--gold);color:var(--gold-ink);background:rgba(180,138,79,.08);margin-left:4px}
+.tag.red{border-color:var(--red);color:var(--red);background:rgba(168,50,31,.06)}
+h2 .tag,h3 .tag,h4 .tag{font-weight:400}
+
+.opts{display:grid;gap:10px;margin-top:12px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opt{display:flex;align-items:flex-start;gap:12px;text-align:left;width:100%;padding:13px 15px;min-height:54px;background:rgba(255,255,255,.55);border:1px solid var(--line)}
+.opt .seal{flex:none;width:26px;height:26px;margin-top:1px;border:1.5px solid var(--line);display:grid;place-items:center;font:14px var(--serif);color:transparent;transition:transform .18s}
+.opt b{font-weight:600}
+.opt small{display:block;font-size:14px;color:var(--soft);margin-top:2px}
+.opt[aria-pressed=true]{border-color:var(--red);background:var(--card);box-shadow:0 1px 0 var(--red)}
+.opt[aria-pressed=true] .seal{background:var(--red);border-color:var(--red);color:#fff;transform:rotate(-6deg)}
+
+.field{display:grid;gap:6px;margin-top:14px}
+.field > span{font-size:15px;color:var(--soft)}
+input,select,textarea{width:100%;min-height:48px;padding:10px 12px;background:var(--card);border:1px solid var(--line);border-radius:0;-webkit-appearance:none;appearance:none}
+select{padding-right:38px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%23a8321f' d='M2.5 5l4.5 4.5L11.5 5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer}
+textarea{min-height:84px;resize:vertical}
+input::placeholder,textarea::placeholder{color:rgba(42,33,28,.42)}
+.unit{display:flex;align-items:center;gap:10px}
+.unit input{max-width:160px}
+.unit em{font-style:normal;color:var(--soft)}
+
+.stepper{display:flex;align-items:stretch}
+.stepper button{width:48px;height:48px;font-size:22px;border:1px solid var(--line);background:var(--card)}
+.stepper input{width:76px;min-height:48px;text-align:center;font:700 20px var(--serif);border-left:0;border-right:0}
+
+.dates{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.date{padding:12px 13px;text-align:left;min-height:84px;background:rgba(255,255,255,.55);border:1px solid var(--line)}
+.date b{display:block;font:700 21px var(--serif)}
+.date small{display:block;font-size:13px;color:var(--soft);line-height:1.45;margin-top:2px}
+.date[aria-pressed=true]{border-color:var(--red);background:var(--card);outline:1px solid var(--red)}
+.inline{display:flex;gap:12px;margin-top:12px;align-items:center}
+.inline input{flex:1;min-width:0}
+.ghost{color:var(--red);text-decoration:underline;text-underline-offset:4px;font-size:15px;white-space:nowrap;min-height:44px}
+.derived{margin-top:14px;padding:12px 2px;border-top:1px dashed var(--gold);border-bottom:1px dashed var(--gold)}
+.derived .row{padding:3px 0}
+.derived b{font:700 19px var(--serif);color:var(--red)}
+
+.hotel{margin-top:18px;padding:18px;background:var(--card);border:1px solid var(--line);border-top:3px solid var(--red)}
+.hotel h4{font-size:22px}
+.hotel h4 small{font:400 13px var(--sans);color:var(--soft);margin-left:6px}
+.star{color:var(--gold);font-size:20px;line-height:1;vertical-align:middle}
+.kv{display:grid;grid-template-columns:4.8em 1fr;gap:6px 10px;margin-top:12px;font-size:15.5px}
+.kv dt{color:var(--soft)}
+.leads{margin-top:12px;padding-top:10px;border-top:1px dotted var(--line);font-size:14.5px;list-style:none}
+.leads li{margin-top:6px;padding-left:14px;position:relative}
+.leads li::before{content:"";position:absolute;left:0;top:.7em;width:5px;height:5px;background:var(--gold);transform:rotate(45deg)}
+.leads small{display:block;color:var(--soft);font-size:12.5px}
+.src{font-size:13px;color:var(--soft);margin-top:8px}
+.ask{font-size:14px;color:var(--soft);margin-top:10px}
+.menus{margin-top:12px;border-top:1px dotted var(--line);padding-top:10px;font-size:14.5px}
+.menus summary{cursor:pointer;color:var(--red);font-weight:600;list-style:none}
+.menus summary::-webkit-details-marker{display:none}
+.menus summary::before{content:"▸ ";display:inline-block;transition:transform .15s}
+.menus[open] summary::before{transform:rotate(90deg)}
+.menu-item{margin-top:10px;padding:10px 12px;background:rgba(245,237,224,.55);border-left:2px solid var(--gold)}
+.menu-item b{display:block;font-weight:600}
+.menu-item small{display:block;color:var(--soft);font-size:12.5px;margin-top:2px}
+.menu-item p{margin-top:6px;line-height:1.55}
+.menu-item p span{color:var(--soft)}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.btn{min-height:46px;padding:8px 10px;font-size:15px;border:1px solid var(--ink);background:transparent}
+.btn[aria-pressed=true]{background:var(--red);border-color:var(--red);color:#fff}
+.tabs{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.tabs .btn{flex:1;min-width:6em}
+.context{margin-top:10px;padding-left:12px;border-left:2px solid var(--gold);font-size:14.5px;color:var(--soft)}
+.context li{list-style:none;margin-top:4px}
+.context b{color:var(--ink);font-weight:600}
+
+.plan{margin-top:16px;padding:16px 18px;background:var(--card);border:1px solid var(--line)}
+.plan h3{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:20px}
+table.cost{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.cost th,.cost td{text-align:left;padding:9px 6px 9px 0;border-top:1px dotted var(--line);vertical-align:top}
+.cost th{font-weight:400;color:var(--soft);white-space:nowrap;width:5.5em}
+
+.time{display:grid;grid-template-columns:122px 1fr;gap:12px;align-items:center;margin-top:10px;padding-bottom:10px;border-bottom:1px dotted var(--line)}
+.time input{text-align:center;font:600 15.5px var(--serif);padding:8px 6px}
+.ref-row{display:grid;grid-template-columns:106px 1fr;gap:10px;padding:10px 0;border-bottom:1px dotted var(--line);font-size:15px}
+.ref-row b{font:600 14.5px var(--serif);color:var(--red);padding-top:2px}
+.ref-row .sub{margin-top:4px;font-size:13.5px;color:var(--soft)}
+
+.day{margin-top:14px;padding:14px 18px 8px;background:var(--card);border:1px solid var(--line)}
+.day h4{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:20px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.day h4 span{font:600 15px var(--sans);color:var(--red)}
+.lines{list-style:none}
+.lines li{display:flex;justify-content:space-between;gap:12px;padding:9px 0}
+.lines li + li{border-top:1px dotted var(--line)}
+.lines li > span:last-child{text-align:right}
+.block{margin-top:22px}
+.block h3{font-size:18px;color:var(--red);letter-spacing:.06em;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.todo{list-style:none;margin-top:6px}
+.todo li{padding:7px 0 7px 22px;position:relative;font-size:15.5px}
+.todo li::before{content:"";position:absolute;left:2px;top:15px;width:10px;height:10px;border:1.5px solid var(--gold)}
+.out{display:grid;gap:10px;margin-top:26px}
+.primary{min-height:52px;background:var(--red);color:#fff;font-size:17px;letter-spacing:.06em}
+.secondary{min-height:48px;border:1px solid var(--ink)}
+.status{font-size:13.5px;color:var(--soft);margin-top:8px;min-height:1.6em}
+
+.foot{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;gap:10px;padding:10px max(18px,calc(50% - 322px)) calc(10px + env(safe-area-inset-bottom));background:linear-gradient(rgba(245,237,224,0),var(--paper) 30%)}
+.foot button{flex:1;min-height:50px;border:1px solid var(--ink);background:var(--paper);font-size:16px}
+.foot button:disabled{opacity:.35}
+.foot .next{flex:1.6;background:var(--red);border-color:var(--red);color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.sheet{position:fixed;inset:0;z-index:20;background:rgba(42,33,28,.82);overflow-y:auto;padding:16px 16px calc(24px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;gap:12px}
+.sheet .bar{width:100%;max-width:560px;display:flex;justify-content:space-between;align-items:center;color:#fff}
+.sheet .bar b{font:600 17px var(--serif);letter-spacing:.08em}
+.sheet .bar button{color:#fff;border:1px solid rgba(255,255,255,.6);padding:6px 14px;min-height:40px}
+.sheet img{width:100%;max-width:560px;height:auto;display:block;box-shadow:0 10px 40px rgba(0,0,0,.4);-webkit-touch-callout:default}
+.sheet a{color:#f3d9a6;font-size:15px}
+
+@media (min-width:900px){
+  body{font-size:17px}
+  .head h2{font-size:34px}
+  .opts.three{grid-template-columns:repeat(3,1fr)}
+  .dates{grid-template-columns:repeat(4,1fr)}
+}
+@media (prefers-reduced-motion:no-preference){
+  main.enter > *{animation:rise .32s ease both}
+  main.enter > *:nth-child(2){animation-delay:.04s}
+  main.enter > *:nth-child(3){animation-delay:.08s}
+  @keyframes rise{from{opacity:0;transform:translateY(6px)}}
+}
+</style>
+</head>
+<body>
+<nav class="steps" id="steps" aria-label="主题"></nav>
+<main class="wrap" id="main"></main>
+<div class="foot"><button id="prev">上一项</button><button id="next" class="next">下一项</button></div>
+<script>(function (root) {
+  'use strict';
+
+  const ONE_DAY_DEFAULT = '2027-10-17';
+  const TWO_DAY_DEFAULT = '2027-10-30';
+  const PLANS = ['', 'same', 'next', 'pending'];
+  const CANDIDATES = [
+    { value: '2027-10-17', note: '适合一天办完' },
+    { value: '2027-10-30', note: '适合办两天，次日周日办女方宴席' },
+    { value: '2027-10-05', note: '备选，档期比较紧' },
+    { value: '2027-10-06', note: '备选，档期比较紧' },
+  ];
+  const WEEKDAYS = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+
+  function isDate(value) {
+    if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+    const d = new Date(value + 'T00:00:00Z');
+    return Number.isFinite(d.getTime()) && d.toISOString().slice(0, 10) === value;
+  }
+
+  function addDays(value, n) {
+    if (!isDate(value)) return '';
+    const d = new Date(value + 'T00:00:00Z');
+    d.setUTCDate(d.getUTCDate() + n);
+    return d.toISOString().slice(0, 10);
+  }
+
+  function weekday(value) {
+    return isDate(value) ? WEEKDAYS[new Date(value + 'T00:00:00Z').getUTCDay()] : '';
+  }
+
+  function autoDateFor(plan) {
+    return { same: ONE_DAY_DEFAULT, next: TWO_DAY_DEFAULT }[plan] || '';
+  }
+
+  function initial() {
+    return { plan: '', date: { value: '', source: 'auto' }, replies: { quotes: null, decor: null } };
+  }
+
+  function choosePlan(state, plan) {
+    const next = PLANS.includes(plan) ? plan : '';
+    const date = state.date.source === 'auto' ? { value: autoDateFor(next), source: 'auto' } : state.date;
+    return { ...state, plan: next, date };
+  }
+
+  function pickDate(state, value) {
+    return { ...state, date: { value: isDate(value) ? value : '', source: 'manual' } };
+  }
+
+  function weddingDate(state) {
+    return state.date.value;
+  }
+
+  function banquetDate(state) {
+    if (state.plan === 'same') return state.date.value;
+    if (state.plan === 'next') return addDays(state.date.value, 1);
+    return '';
+  }
+
+  function threeDays(state) {
+    const d = state.date.value;
+    return { eve: addDays(d, -1), wedding: d, after: addDays(d, 1) };
+  }
+
+  const V3_PLAN = { same: 'same', next: 'next', pending: 'pending' };
+
+  function migrate(raw) {
+    if (!raw || typeof raw !== 'object') return initial();
+    if (raw.version === 4) return normalizeV4(raw);
+    const plan = V3_PLAN[raw.womenDay] || '';
+    const value = isDate(raw.date) ? raw.date : '';
+    const keepsAuto = raw.dateMode !== 'manual' && (value === '' || value === autoDateFor(plan));
+    const base = { plan, date: keepsAuto ? { value: '', source: 'auto' } : { value, source: 'manual' } };
+    const replies = { quotes: copy(raw.quotes), decor: copy(raw.decor) };
+    return { ...(keepsAuto ? choosePlan(base, plan) : base), replies };
+  }
+
+  function copy(value) {
+    return value && typeof value === 'object' ? JSON.parse(JSON.stringify(value)) : null;
+  }
+
+  function normalizeV4(raw) {
+    const plan = PLANS.includes(raw.plan) ? raw.plan : '';
+    const source = raw.date && raw.date.source === 'manual' ? 'manual' : 'auto';
+    const value = raw.date && isDate(raw.date.value) ? raw.date.value : '';
+    const base = { plan, date: { value, source }, replies: { quotes: copy(raw.replies && raw.replies.quotes), decor: copy(raw.replies && raw.replies.decor) } };
+    return source === 'auto' ? choosePlan(base, plan) : base;
+  }
+
+  function serialize(state) {
+    return { version: 4, plan: state.plan, date: { ...state.date }, replies: copy(state.replies) || { quotes: null, decor: null } };
+  }
+
+  const api = {
+    ONE_DAY_DEFAULT, TWO_DAY_DEFAULT, CANDIDATES, isDate, addDays, weekday, initial, choosePlan, pickDate,
+    weddingDate, banquetDate, threeDays, migrate, serialize,
+  };
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else root.Rules = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+
+(function (root) {
+  'use strict';
+
+  const Rules = typeof module === 'object' && module.exports ? require('./rules.js') : root.Rules;
+
+  const HOTELS = [
+    {
+      id: 'shangri', name: '香格里拉', sub: '宁波', liked: true,
+      facts: [['婚宴', '约 1 万元／桌'], ['住宿', '600 元／间']],
+      leads: [
+        ['10,299 元起，25–30 桌，赠 1 婚房及 2 客房；含固定投影仪及幕布、出席人数 30% 停车券、桌面菜单和桌号牌', '2026-08 个人记录及菜单截图'],
+        ['10,888 元起，宣传可办 108 桌', '商业资料，日期未显示'],
+        ['单厅 25 桌，层高约 8 米；打通两厅低消约 46 万元，非合作婚庆入场费 4 万元', '2025-06 个人记录'],
+      ],
+      menus: [
+        {
+          name: 'CNY 10,299 元／桌（10 人席）',
+          note: '含固定投影仪及幕布、30% 停车券、桌面菜单与桌号牌（2027 年适用性待酒店确认）',
+          cold: '大盘红膏炝蟹、精品海蜇头、奉化血蚶、高山白斩鸡、紫金卤金钱腱、星厨酱马鲛鱼、迷你爽口小瓜、郁香红豆山药、美味坚果组合、缤纷果蔬沙拉',
+          hot: '龙凤小金团、精选豪华刺身拼盘（三文鱼、北极甜虾、象拔蚌）、雄兴烧鹅拼黑叉烧、经典浓汤佛跳墙（位）、白灼生猛竹节虾、水晶虾饺蒸大龙虾、豉油姜蓉深海东星斑、葱油阿拉斯加帝王蟹、农家酱油肉拼鱼鲞、炭烤安格斯牛肋骨、潮州酸菜花枝片、虫草花竹笙炖老鸽、香酥经典油双味、红汤仔排水库甲鱼、红藜麦铁棍山药、原味田园嫩时蔬、核桃红酒糟圆子、黑松露灌汤小笼包、岭南缤纷鲜果盘',
+        },
+        {
+          name: 'CNY 12,299 元／桌（10 人席）',
+          note: '截图仅拍到十味碟及前两道热菜，其余热菜待补全',
+          cold: '红膏炝蟹、墨鱼大烤、奶酪山药糕、5J火腿沙拉、陈皮金钱腱、香芹沙鳗鲞、什锦干果、鲜虾时蔬卷、青藤脆玉瓜、秘制小花螺',
+          hot: '蔓越莓分子蛋糕、精美豪华刺身拼盘（其余热菜待补全）',
+        },
+      ],
+      ask: ['主晚宴 50 桌用哪个厅', '赠房条件', '午宴与女方宴席餐标', '非合作婚庆入场费是否适用'],
+    },
+    {
+      id: 'panpacific', name: '泛太平洋', sub: '宁波', liked: true,
+      facts: [['婚宴', '8,999 元起、9,999 元起两档'], ['住宿', '单早大床 720 元／间，标间 690 元／间，加早 100 元'], ['户外', '有小草坪，租金 2 万元，优惠后 1 万元']],
+      leads: [
+        ['非合作婚庆入场费 12,000 元', '2026-08 个人记录，本次是否适用待问'],
+      ],
+      menus: [
+        {
+          name: 'A 套天作之合宴（8,999 元净价／席，供 10 位用）',
+          note: '菜单有效期至 2026-12-31，2027 年适用菜单及价格待酒店确认',
+          cold: '爽口金丝海蜇边、宁波咸蟹、大烤目鱼、酱黄鱼鲞、雪汁牛腱、金丝瓜、蜜汁大红枣、鲜柚蔬菜沙拉、香酥干果、虾松脆青笋',
+          hot: '象鼻蚌刺身拼盘、浓汤一品海皇羹（位上）、蒜茸虾饺大龙虾、芙蓉豉油松叶蟹、金蒜银丝大连鲍、秘汁板肉大黄鱼、洪湖藕苗雪花牛、果仁宫爆大虾球、脆皮香炸芝麻鸡、炆火红枣走油蹄、豉汁广东嫩芥兰、鲜菌菇炒田园蔬、富贵吉祥灌汤包、柿柿如意大汤圆、锦绣合时水果盘',
+        },
+        {
+          name: 'B 套开枝散叶宴（8,999 元净价／席，供 10 位用）',
+          note: '菜单有效期至 2026-12-31，2027 年适用菜单及价格待酒店确认',
+          cold: '酱青膏蟹、老味海蜇头、渔家鳗鲞、捞汁樱川章鱼、香拌龙须菜、老灶咸草鸡、慕斯南瓜、爽口冰草、茉莉花甜豆、黑松露卷',
+          hot: '老北京果木烤鸭、黄焖鲍参鱼肚羹（位上）、兰花虾饺大龙虾、芙蓉豉油太子蟹、海鸭蛋焦糖叉烧、广式深海东星斑、鲜花椒西冷雪花、鲍汁鹅掌吉品鲍脯、姜葱盐水基围虾、幸福爱巢爆澳带、香南百合炒芦笋、生炒广东脆菜心、富贵吉祥灌汤包、枣生桂子银耳羹、锦绣合时水果盘',
+        },
+      ],
+      ask: ['两档菜单的区别', '草坪优惠条件', '非合作婚庆入场费是否适用'],
+    },
+    {
+      id: 'wyndham', name: '华侨温德姆', sub: '宁波', liked: true,
+      facts: [['婚宴', '约 9,999 元／桌'], ['住宿', 'A 座 650 元／间，B 座 450 元／间']],
+      leads: [],
+      ask: ['主晚宴 50 桌能否一厅', 'A／B 座房型与早餐'],
+    },
+    {
+      id: 'nanyuan', name: '老南苑', sub: '宁波，不是南苑环球',
+      facts: [['婚宴', '8,999 元／桌（2026 菜单参考 7,999 元／桌）'], ['住宿', '400 元／间，含双早'], ['场地', '两个厅，60 桌；层高 8.5 米；没有草坪婚礼'], ['档期', '10月6日、10月17日有档期']],
+      leads: [],
+      menus: [
+        {
+          name: '永结同心宴（7,999 元／桌）',
+          note: '2026 南苑婚宴菜单，仅限 2027 年 2 月前婚宴；2027 年 10 月菜单及价格待确认',
+          coldLabel: '精美八味碟',
+          cold: '红膏咸蟹、赏金带鱼、南乳目鱼、冷拌海蜇头、鲜蔬沙拉、苔菜双果、捞汁玉女瓜、松子小菜心',
+          hot: '香甜龙凤小金团、刺身盘（象鼻蚌、熟醉罗氏虾、红金枪、希鲮鱼籽）、清汤薏米关东参（各客）、同心油双味（蟹粉春卷、蒜香脆皮骨）、圆笼清蒸大闸蟹（3.5两/10只）、三杯汁焗游水大龙虾（葱油、黄油焗）、喜灼游水基围虾、金银蒜宝大连鲍（10只）、五彩窝头扣蟛肉、莲心芹香炖牛腩、青柠蜜汁黑叉烧、东星斑 1.3 斤左右（广式、沸腾）、雄兴宁式烤烧鹅、福果西芹炒百合、油淋迷你小菜心、美点映双辉（灌汤小笼包、椰浆彩虹汤圆）、精美岭南水果盘',
+        },
+        {
+          name: '花好月圆宴（7,999 元／桌）',
+          note: '2026 南苑婚宴菜单，仅限 2027 年 2 月前婚宴；2027 年 10 月菜单及价格待确认',
+          coldLabel: '精美八味碟',
+          cold: '红膏咸蟹、秋葵海蜇花、特色马鲛鱼、白切鹅、爽口木耳、油醋汁沙拉、香酥杂果、宁波烤菜',
+          hot: '奉香芒果小布丁、刺身盘（象鼻蚌、熟醉罗氏虾、红金枪、希鲮鱼籽）、浓汤海参炖花胶（各客）、喜园油双味（蟹柳沙拉卷、脆叉烧）、葱油生猛秋叶蟹、九层塔小青龙（咖喱、黄油焗、蒜蓉）、泉水生灼基围虾、禧运澳洲扇贝皇（10片）、照烧新西兰牛排、XO 酱节瓜爆海味、东极大黄鱼 1.6 斤左右（抱盐、雪菜）、甬式三鲜全家福、三葱玫瑰豉油鸡、顺风酱肉船王鲞、原味有机田园蔬、美点映双辉（手工鲜肉中包、雪莲圆子羹）、精美岭南水果盘',
+        },
+      ],
+      ask: ['两个厅怎么分配主晚宴 50 桌', '档期保留到什么时候'],
+    },
+    {
+      id: 'westin', name: '威斯汀', sub: '宁波',
+      facts: [['婚宴', '6,999–8,999 元／桌'], ['住宿', '600 元／间'], ['服务', '一站式'], ['户外', '匹克露台可以办户外']],
+      leads: [],
+      ask: ['一站式包含哪些', '户外仪式费用'],
+    },
+  ];
+  const HOTEL_IDS = HOTELS.map(h => h.id);
+  const hotelName = id => (HOTELS.find(h => h.id === id) || {}).name || '';
+
+  const CHOICE = ['', 'yes', 'no', 'pending'];
+  const VENUE_MODES = ['', 'same', 'split', 'pending'];
+  const SCHEDULE = {
+    prep: '06:30',
+    groomPrep: '08:15',
+    depart: '09:00',
+    pickup: '10:00–11:00',
+    lunch: '11:00–12:30',
+    leave: '12:30–13:00',
+    newHome: '14:00–15:30',
+    toHotel: '15:30–16:00',
+    setup: '16:00–17:00',
+    welcome: '17:08',
+    transfer: '',
+    evening: '17:30–20:00',
+    after: '11:30',
+  };
+
+  function initial() {
+    return {
+      ...Rules.initial(),
+      arrival: 'yes', guests: '', stay: '', rooms: '', dinner: '', dinnerTables: '', eveNote: '',
+      tables: '30', lightTables: '', lightNote: '',
+      hotels: Object.fromEntries(HOTEL_IDS.map(id => [id, { viewed: false, shortlist: false }])),
+      venue: '',
+      venueMode: '', splitHotel: '', transfer: '',
+      quotes: Object.fromEntries(HOTEL_IDS.map(id => [id, { price: '', basis: '', menu: '' }])),
+      decor: { allowed: '', scope: '', fee: '', limits: '' },
+      schedule: { ...SCHEDULE },
+    };
+  }
+
+  const str = v => (typeof v === 'string' ? v : '');
+  const count = v => str(v).replace(/\D/g, '').slice(0, 6);
+  const oneOf = (list, v, fallback = '') => (list.includes(v) ? v : fallback);
+  const obj = v => (v && typeof v === 'object' ? v : {});
+
+  // Parse untrusted stored data into a full state; unknown keys are dropped.
+  function load(raw) {
+    const base = Rules.migrate(raw);
+    const r = obj(raw).version === 4 ? raw : {};
+    const init = initial();
+    const hotels = obj(r.hotels), quotes = obj(r.quotes), decor = obj(r.decor), schedule = obj(r.schedule);
+    return {
+      ...init,
+      ...base,
+      arrival: oneOf(CHOICE, r.arrival, init.arrival), guests: count(r.guests),
+      stay: oneOf(CHOICE, r.stay), rooms: count(r.rooms),
+      dinner: oneOf(CHOICE, r.dinner), dinnerTables: count(r.dinnerTables),
+      eveNote: str(r.eveNote),
+      tables: 'tables' in r ? count(r.tables) : init.tables,
+      lightTables: count(r.lightTables), lightNote: str(r.lightNote),
+      hotels: Object.fromEntries(HOTEL_IDS.map(id => {
+        const h = obj(hotels[id]);
+        return [id, { viewed: h.viewed === true, shortlist: h.shortlist === true }];
+      })),
+      venue: oneOf(HOTEL_IDS, r.venue),
+      venueMode: oneOf(VENUE_MODES, r.venueMode),
+      splitHotel: oneOf(HOTEL_IDS, r.splitHotel), transfer: str(r.transfer),
+      quotes: Object.fromEntries(HOTEL_IDS.map(id => {
+        const q = obj(quotes[id]);
+        return [id, { price: count(q.price), basis: str(q.basis), menu: str(q.menu) }];
+      })),
+      decor: { allowed: oneOf(CHOICE, decor.allowed), scope: str(decor.scope), fee: count(decor.fee), limits: str(decor.limits) },
+      schedule: Object.fromEntries(Object.keys(SCHEDULE).map(k => [k, k in schedule ? str(schedule[k]).slice(0, 16) : SCHEDULE[k]])),
+    };
+  }
+
+  function serialize(state) {
+    const { plan, date, replies, ...rest } = state;
+    return { ...JSON.parse(JSON.stringify(rest)), ...Rules.serialize(state) };
+  }
+
+  // Immutable set by dotted path, e.g. set(s, 'quotes.shangri.price', '9800').
+  function set(state, path, value) {
+    const [head, ...tail] = path.split('.');
+    return { ...state, [head]: tail.length ? set(obj(state[head]), tail.join('.'), value) : value };
+  }
+
+  // Values the current choices hide are blanked so nothing downstream can read them.
+  function effective(state) {
+    const s = JSON.parse(JSON.stringify(state));
+    if (s.arrival !== 'yes') Object.assign(s, { guests: '', stay: '', rooms: '', dinner: '', dinnerTables: '', eveNote: '' });
+    if (s.stay !== 'yes') s.rooms = '';
+    if (s.dinner !== 'yes') s.dinnerTables = '';
+    if (s.plan !== 'next') {
+      Object.assign(s, { lightTables: '', lightNote: '' });
+      s.decor = { allowed: '', scope: '', fee: '', limits: '' };
+      s.schedule.after = '';
+    }
+    if (s.venueMode !== 'split') Object.assign(s, { splitHotel: '', transfer: '' });
+    if (s.venueMode !== 'split') s.schedule.transfer = '';
+    return s;
+  }
+
+  const money = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const fmtDate = v => {
+    if (!Rules.isDate(v)) return '待定';
+    const [, m, d] = v.split('-');
+    return `${+m}月${+d}日 ${Rules.weekday(v)}`;
+  };
+  const tablesText = t => (t === '' ? '桌数待定' : `约 ${t} 桌`);
+  const PLAN_TEXT = { same: '婚礼当天中午', next: '婚礼次日中午', pending: '待商量', '': '未选择' };
+  const CHOICE_TEXT = { yes: '有', no: '没有', pending: '待商量', '': '未填写' };
+  const VENUE_TEXT = { same: '同一家酒店', split: '分开办', pending: '待商量', '': '未选择' };
+
+  function row(label, value, tag) {
+    return tag ? { label, value, tag } : { label, value };
+  }
+
+  function eveRows(e) {
+    if (e.arrival === 'no') return [row('提前到达宾客', '无')];
+    if (e.arrival !== 'yes') return [row('提前到达宾客', CHOICE_TEXT[e.arrival], e.arrival === 'pending' ? '待商量' : '')];
+    const rows = [row('提前到达宾客', e.guests === '' ? '人数待统计' : `${e.guests} 人`)];
+    rows.push(e.stay === 'yes' ? row('住宿', e.rooms === '' ? '房间数待统计' : `${e.rooms} 间`)
+      : row('住宿', { no: '不安排', pending: '待商量', '': '未填写' }[e.stay]));
+    rows.push(e.dinner === 'yes' ? row('前日晚餐', e.dinnerTables === '' ? '桌数待统计' : `${e.dinnerTables} 桌`)
+      : row('前日晚餐', { no: '不安排', pending: '待商量', '': '未填写' }[e.dinner]));
+    if (e.eveNote.trim()) rows.push(row('备注', e.eveNote.trim()));
+    return rows;
+  }
+
+  // Draft timeline rows shared by the editor (参考行程) and the report.
+  function scheduleRows(e) {
+    const noon = e.plan === 'same' ? '男方午宴 · 女方宴席' : e.plan === 'next' ? '男方午宴 · 女方午宴' : '男方午宴 · 女方午间安排待定';
+    const venue = hotelName(e.venue) || '婚礼酒店';
+    return [
+      { key: 'prep', label: '新娘家起床梳洗、化妆，准备点心', empty: '时间待定' },
+      { key: 'groomPrep', label: '新郎家做准备、车队装饰到位', empty: '时间待定' },
+      { key: 'depart', label: '新郎出发接亲', empty: '时间待定' },
+      { key: 'pickup', label: '到达女方家：叫门、拦门游戏、献花、吃甜品', empty: '时间待定' },
+      { key: 'lunch', label: `午饭（${noon}）`, empty: '时间待定' },
+      { key: 'leave', label: '出门：换新鞋、与女方父母道别出发', empty: '时间待定' },
+      { key: 'newHome', label: '到达新房：拦门习俗、敬茶送嫁被、拍新家仪式', empty: '时间待定' },
+      { key: 'toHotel', label: `前往${venue}：休息、换婚纱、拍外景、仪式彩排`, empty: '时间待定' },
+      { key: 'setup', label: '酒店现场：放置喜糖盒及酒水饮料、检查布置', empty: '时间待定' },
+      { key: 'welcome', label: '宴会厅门口迎宾、来宾签到', empty: '时间待定' },
+      ...(e.venueMode === 'split' ? [{ key: 'transfer', label: '转场', empty: '待核实', tag: '路程与耗时待核实' }] : []),
+      { key: 'evening', label: '晚宴正式开始：进场仪式、开席、敬酒、送宾', empty: '时间待定' },
+      ...(e.plan === 'next' ? [{ key: 'after', label: '女方宴席', empty: '时间待定', prefix: '次日 ' }] : []),
+    ];
+  }
+
+  function banquetHotel(e) {
+    return e.venueMode === 'split' ? e.splitHotel : e.venue;
+  }
+
+  function report(e, today) {
+    const d = Rules.threeDays(e);
+    const feast = row('女方宴席', tablesText(e.tables));
+    const light = row('女方午宴', e.lightTables === '' ? '桌数待定' : `${e.lightTables} 桌`, e.lightTables === '' ? '待补充' : '');
+    const days = [
+      { key: 'eve', label: '前一天', date: d.eve, dateText: fmtDate(d.eve), items: eveRows(e) },
+      {
+        key: 'wedding', label: '婚礼当天', date: d.wedding, dateText: fmtDate(d.wedding), items: [
+          row('男方午宴', '10–15 桌', '基本计划'),
+          ...(e.plan === 'same' ? [feast] : []),
+          ...(e.plan === 'next' ? [light] : []),
+          row('主晚宴', '50 桌', '基本计划'),
+        ],
+      },
+      {
+        key: 'after', label: '次日', date: d.after, dateText: fmtDate(d.after),
+        items: e.plan === 'next'
+          ? [feast, row('婚礼布置保留', { yes: '酒店与婚庆同意保留', no: '不能保留', pending: '待确认', '': '待确认' }[e.decor.allowed], e.decor.allowed === 'yes' ? '' : '待酒店核实')]
+          : [row('无已选宴席', '')],
+      },
+    ];
+
+    const shortlist = HOTEL_IDS.filter(id => e.hotels[id].shortlist).map(hotelName);
+    const viewed = HOTEL_IDS.filter(id => e.hotels[id].viewed).map(hotelName);
+
+    const banquet = {
+      key: 'banquet', title: '宴席安排', rows: [
+        row('女方宴席时间', PLAN_TEXT[e.plan], e.plan === 'pending' || e.plan === '' ? '待商量' : ''),
+        row('女方宴席桌数', tablesText(e.tables)),
+        row('桌数口径', '女方预计共约 60 桌：其中约 30 桌已含在当天主晚宴（50 桌）内，本项女方宴席为当天未能邀请到的另外约 30 桌，两批宾客不重复，主晚宴 50 桌不核减'),
+        row('婚礼日期', fmtDate(e.date.value), e.date.value ? (e.date.source === 'auto' ? '自动带入·可修改' : '档期待酒店核实') : ''),
+        ...(e.plan === 'next' ? [row('当天女方午宴', light.value, light.tag), ...(e.lightNote.trim() ? [row('午宴人员与地点', e.lightNote.trim())] : [])] : []),
+      ],
+    };
+    const hotels = {
+      key: 'hotels', title: '酒店', rows: shortlist.length || e.venue ? [
+        row('洽谈名单', shortlist.length ? shortlist.join('、') : '未选'),
+        row('本次地点选择', e.venue ? hotelName(e.venue) : '未选', e.venue ? '不等于预订' : ''),
+        ...(viewed.length ? [row('已看资料', viewed.join('、'))] : []),
+      ] : [
+        row('意向酒店', '5 家意向酒店资料仅作展示，暂不做选择'),
+        row('场地进度', '待后续实地洽谈后确定'),
+      ],
+    };
+    const place = {
+      key: 'place', title: '地点安排', rows: [
+        row('宴席地点', VENUE_TEXT[e.venueMode], e.venueMode === 'pending' || e.venueMode === '' ? '待商量' : ''),
+        ...(e.venueMode === 'split' ? [
+          row('女方宴席地点', e.splitHotel ? hotelName(e.splitHotel) : '待定'),
+          row('转场', e.transfer.trim() || '约 30–45 分钟（市内酒店间参考）'),
+        ] : []),
+      ],
+    };
+
+    const schedule = {
+      key: 'schedule', title: '当天参考行程', image: false,
+      rows: scheduleRows(e).map(r => row(`${r.prefix || ''}${e.schedule[r.key] || r.empty}`, r.label, r.tag)),
+    };
+
+    const pending = [];
+    if (e.plan === '' || e.plan === 'pending') pending.push('女方宴席放当天还是次日中午');
+    pending.push(e.date.value ? '婚礼日期档期待酒店核实' : '婚礼日期待定');
+    if (e.plan === 'next' && e.lightTables === '') pending.push('当天女方午宴桌数、人员与地点');
+    if (e.plan === 'next' && e.decor.allowed !== 'yes') pending.push('婚礼布置能否保留到次日，费用与限制');
+    if (e.arrival === '' || e.arrival === 'pending') pending.push('前一天是否有宾客提前到达');
+    if (e.arrival === 'yes') {
+      const counts = [['来宾人数', e.guests === ''], ['房间数', e.stay === 'yes' && e.rooms === ''], ['晚餐桌数', e.dinner === 'yes' && e.dinnerTables === '']].filter(([, open]) => open).map(([k]) => k);
+      if (counts.length) pending.push(`前日${counts.join('、')}待统计`);
+    }
+    if (e.arrival === 'yes') {
+      const open = [['住宿', e.stay], ['晚餐', e.dinner]].filter(([, v]) => v === '' || v === 'pending').map(([k]) => k);
+      if (open.length) pending.push(`前日${open.join('、')}是否安排`);
+    }
+    if (e.venueMode === '' || e.venueMode === 'pending') pending.push('同一家酒店还是分开办');
+    if (e.venueMode === 'split' && !e.transfer.trim()) pending.push('转场路程与时间');
+    const unquoted = [...new Set([e.venue, ...HOTEL_IDS.filter(id => e.hotels[id].shortlist)])].filter(id => id && !e.quotes[id].price);
+    if (unquoted.length) pending.push(`${unquoted.map(hotelName).join('、')}菜单与正式报价`);
+    else pending.push('意向酒店正式菜单、档期与报价待后续洽谈获取');
+
+    return {
+      title: '婚礼安排确认单',
+      generated: today ? fmtDate(today) : '',
+      days,
+      sections: [banquet, hotels, place, schedule, { key: 'pending', title: '待商量 / 待核实', list: pending }],
+    };
+  }
+
+  function toText(rep) {
+    const lines = [rep.title];
+    if (rep.generated) lines.push(`生成日期：${rep.generated}`);
+    const item = r => `· ${r.label}${r.value ? `：${r.value}` : ''}${r.tag ? `（${r.tag}）` : ''}`;
+    lines.push('', '【三天安排】');
+    for (const d of rep.days) {
+      lines.push(`${d.label}　${d.dateText}`);
+      d.items.forEach(r => lines.push(item(r)));
+    }
+    for (const s of rep.sections) {
+      lines.push('', `【${s.title}】`);
+      if (s.list) s.list.forEach(t => lines.push(`· ${t}`));
+      else s.rows.forEach(r => lines.push(item(r)));
+    }
+    return lines.join('\n');
+  }
+
+  const api = { HOTELS, HOTEL_IDS, hotelName, initial, load, serialize, set, effective, report, toText, fmtDate, scheduleRows, money };
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else root.Model = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+
+(function () {
+  'use strict';
+  const R = window.Rules, M = window.Model;
+  const KEY = 'wedding-family-v4', KEY_V3 = 'wedding-arrangements-v3';
+  const STEPS = ['前日来宾', '宴席安排', '酒店与婚庆', '参考行程', '男方安排', '安排总览'];
+  const NUM = ['壹', '贰', '叁', '肆', '伍', '陆'];
+
+  let state, saved = true, hotelTab = M.HOTEL_IDS[0], confirmReset = false, copyStatus = '';
+  let step = Math.min(5, Math.max(0, (+(location.hash.match(/^#step-(\d)$/) || [])[1] || 1) - 1));
+
+  // ---------- storage (boundary: anything can fail here) ----------
+  function boot() {
+    let text = null;
+    try { text = localStorage.getItem(KEY); if (text === null) text = localStorage.getItem(KEY_V3); }
+    catch (_) { saved = false; }
+    let raw = null;
+    try { raw = JSON.parse(text); } catch (_) { raw = null; }
+    state = M.load(raw);
+  }
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(M.serialize(state))); saved = true; }
+    catch (_) { saved = false; }
+  }
+  function apply(next) { state = next; confirmReset = false; save(); render(false); }
+
+  // ---------- small view helpers ----------
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const get = path => path.split('.').reduce((o, k) => o[k], state);
+  const tag = (text, red) => text ? `<span class="tag${red ? ' red' : ''}">${esc(text)}</span>` : '';
+  const head = (i, desc, extra) => `<header class="head"><div class="no">第${NUM[i]}项</div><h2>${STEPS[i]}${extra || ''}</h2>${desc ? `<p>${desc}</p>` : ''}</header>`;
+  const opt = (path, value, title, sub, t) =>
+    `<button class="opt" data-set="${path}" data-v="${value}" aria-pressed="${get(path) === value}"><span class="seal">选</span><span><b>${title}</b>${t ? tag(t) : ''}${sub ? `<small>${sub}</small>` : ''}</span></button>`;
+  const choice3 = (path, yes, no) => `<div class="opts three">${opt(path, 'yes', yes)}${opt(path, 'no', no)}${opt(path, 'pending', '待商量')}</div>`;
+  const num = (path, unit, placeholder) =>
+    `<div class="unit"><input data-k="${path}" data-num inputmode="numeric" pattern="[0-9]*" value="${esc(get(path))}" placeholder="${placeholder || '待统计'}" aria-label="${unit}"><em>${unit}</em></div>`;
+  const text = (path, placeholder, area) => area
+    ? `<textarea data-k="${path}" placeholder="${placeholder}">${esc(get(path))}</textarea>`
+    : `<input data-k="${path}" value="${esc(get(path))}" placeholder="${placeholder}">`;
+  const field = (label, control) => `<label class="field"><span>${label}</span>${control}</label>`;
+  const lines = rows => `<ul class="lines">${rows.map(r => `<li><span>${esc(r.label)}</span><span>${esc(r.value)}${tag(r.tag)}</span></li>`).join('')}</ul>`;
+
+  // ---------- topics ----------
+  function viewEve() {
+    const eve = R.threeDays(state).eve;
+    return `<div class="mast"><span class="xi"><span>囍</span></span><b>婚礼安排确认单</b></div>
+    ${head(0, `婚礼前一天（${M.fmtDate(eve)}）到达的宾客。数量空着表示待统计，填 0 表示没有。`)}
+    <section class="q"><h3>是否有宾客提前一天到？</h3>${choice3('arrival', '有', '没有')}</section>
+    ${state.arrival === 'yes' ? `
+    <section class="q"><h3>预计人数</h3><div class="field">${num('guests', '人')}</div></section>
+    <section class="q"><h3>住宿</h3>${choice3('stay', '需要安排', '不需要')}
+      ${state.stay === 'yes' ? field('房间数', num('rooms', '间')) : ''}</section>
+    <section class="q"><h3>前一天晚餐</h3>${choice3('dinner', '安排晚餐', '不安排')}
+      ${state.dinner === 'yes' ? field('桌数', num('dinnerTables', '桌')) : ''}</section>
+    <section class="q"><h3>备注</h3><div class="field">${text('eveNote', '例如：哪些亲戚、从哪里来', true)}</div></section>` : ''}`;
+  }
+
+  function viewBanquet() {
+    const p = state.plan, v = state.date.value, src = state.date.source;
+    const srcTag = v ? (src === 'auto' ? tag('自动带入·可修改') : tag('手选', true)) : (src === 'manual' ? tag('已清空') : '');
+    const derived = p === 'next'
+      ? `<div class="row"><span>婚礼</span><b>${M.fmtDate(v)}</b></div><div class="row"><span>女方宴席</span><b>${M.fmtDate(R.banquetDate(state))}</b></div>`
+      : p === 'same' ? `<div class="row"><span>婚礼与女方宴席</span><b>${M.fmtDate(v)}</b></div>`
+        : `<div class="row"><span>婚礼</span><b>${M.fmtDate(v)}</b></div><div class="row"><span>女方宴席</span><b>待商量</b></div>`;
+    const banquetDayTag = p === 'next' ? tag('次日中午', true) : p === 'same' ? tag('当天中午', true) : '';
+    return `${head(1, '女方预计共约 60 桌：其中约 30 桌在当天主晚宴（50 桌）内，此处确认的是当天未能邀请到的另外约 30 桌。')}
+    <section class="q"><h3>女方宴席放在哪天中午？</h3><div class="opts">
+      ${opt('plan', 'same', '婚礼当天中午', '一天办完，适合 10月17日（周日）')}
+      ${opt('plan', 'next', '婚礼次日中午', '办两天，适合 10月30日（周六）婚礼、31日（周日）女方宴席；婚礼当天另有女方午宴（桌数待统计）', '女方目前倾向')}
+      ${opt('plan', 'pending', '待商量')}</div></section>
+    <section class="q"><div class="row"><h3>女方宴席桌数 ${banquetDayTag}</h3>
+      <div class="stepper"><button data-bump="-1" aria-label="减一桌">−</button><input data-k="tables" data-num inputmode="numeric" pattern="[0-9]*" value="${esc(state.tables)}" placeholder="待定" aria-label="女方宴席桌数"><button data-bump="1" aria-label="加一桌">＋</button></div></div></section>
+    ${p === 'next' ? `<section class="q split"><h3>婚礼当天女方午宴 ${tag('婚礼当天中午', true)}${tag('人数、地点待补充')}</h3>
+      <p>仅限婚礼当天中午，供未参加男方午宴的女方亲友与工作人员用餐（如亲戚、伴郎伴娘、摄影摄像等）。</p>
+      ${field('桌数', num('lightTables', '桌', '待统计'))}
+      ${field('人员与地点', text('lightNote', '亲戚、伴郎伴娘、摄影摄像等'))}</section>` : ''}
+    <section class="q split"><div class="row"><h3>婚期参考与日期意向 ${tag('婚礼当天日期')}</h3>${srcTag}</div>
+      <div class="dates">${R.CANDIDATES.map(c => `<button class="date" data-date="${c.value}" aria-pressed="${v === c.value}"><b>${M.fmtDate(c.value).split(' ')[0]}</b><small>${R.weekday(c.value)} · ${c.note}</small></button>`).join('')}</div>
+      <div class="inline"><input type="date" id="date-other" value="${v}" min="2027-01-01" max="2028-12-31" aria-label="其他日期"><button class="ghost" data-date="">清空日期</button></div>
+      <div class="derived">${derived}</div>
+      <p class="note">日期 ${tag('档期待酒店核实')}</p></section>`;
+  }
+
+  function hotelCard(h) {
+    return `<article class="hotel"><div class="row"><h4>${h.name}<small>${h.sub}</small></h4>
+      <span>${h.liked ? '<span class="star" title="比较喜欢" aria-label="比较喜欢">★</span>' : ''}</span></div>
+      <dl class="kv">${h.facts.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>
+      <p class="src">以上为询问记录，不是正式报价 ${tag('询问记录')}</p>
+      ${h.leads.length ? `<ul class="leads">${h.leads.map(([t, src]) => `<li>${t}${src ? `<small>${src}</small>` : ''}</li>`).join('')}</ul>` : ''}
+      ${h.menus && h.menus.length ? `<details class="menus"><summary>查看参考配菜（${h.menus.length} 套）</summary>${h.menus.map(m => `<div class="menu-item"><b>${m.name}</b><small>${m.note}</small><p><span>${m.coldLabel || '精美十小碟'}：</span>${m.cold}</p><p><span>热菜与点心：</span>${m.hot}</p></div>`).join('')}</details>` : ''}
+      <p class="ask">后续洽谈要问：${h.ask.join('、')}</p></article>`;
+  }
+
+  function viewHotels() {
+    const current = M.HOTELS.find(h => h.id === hotelTab) || M.HOTELS[0];
+    return `${head(2, '目前掌握的意向酒店资料汇总。')}
+    <label class="field"><span>选择查看意向酒店（共 ${M.HOTELS.length} 家，★ 为意向优选）</span>
+      <select id="hotel-view">${M.HOTELS.map(h => `<option value="${h.id}"${h.id === current.id ? ' selected' : ''}>${h.liked ? '★ ' : ''}${h.name}</option>`).join('')}</select></label>
+    ${hotelCard(current)}
+    <section class="q"><h3>宴席放在同一家酒店，还是分开办？</h3>
+      <ul class="context"><li>在一家办的话，女方宴请按照答谢宴方式，价格为婚宴一半左右（具体菜单、报价待酒店确认）。</li>
+      <li>如放次日，需和酒店确认前一天的婚宴布置能否保留。</li></ul>
+      <div class="opts three">${opt('venueMode', 'same', '同一家酒店')}${opt('venueMode', 'split', '分开办')}${opt('venueMode', 'pending', '待商量')}</div></section>
+    <section class="q split"><h3>后续需要确认的事项 ${tag('仅供知晓')}</h3>
+      <article class="plan"><ul class="todo">
+        <li><b>档期与厅房：</b>核实婚礼及次日中午是否有空余档期，主晚宴 50 桌用哪个厅（单厅或打通）。</li>
+        <li><b>餐标与优惠：</b>获取 2027 年正式菜单与报价，谈桌价优惠、免服务费及次日答谢宴折价。</li>
+        <li><b>住宿与赠房：</b>确认婚房及亲友客房协议价能否更优惠、是否含早餐，以及按桌数赠送客房的条件。</li>
+        <li><b>酒水与停车：</b>确认自备茅台、五粮液等酒水是否免开瓶费，以及宾客停车券安排。</li>
+        <li><b>婚庆入场与布置保留：</b>谈非合作婚庆入场费减免；若次日办女方宴席，确认前一晚布置能否保留到次日中午及是否收费。</li>
+      </ul></article></section>`;
+  }
+
+  function eveningScheduleGroups(e) {
+    const noon = e.plan === 'same' ? '男方午宴 · 女方宴席' : e.plan === 'next' ? '男方午宴 · 女方午宴' : '男方午宴 · 女方午间安排待定';
+    const venue = M.hotelName(e.venue) || '婚礼酒店';
+    const splitVenue = e.splitHotel ? M.hotelName(e.splitHotel) : '女方宴席酒店';
+    return [
+      {
+        group: '早上准备与接亲（新娘家 / 新郎家）',
+        rows: [
+          ['06:30', '新娘家：起床梳洗、敷面膜、吃早餐；化妆师到场开始化妆', '伴娘 07:00 到位协助；娘家人准备点心（桂圆煮蛋等）；摄影师 08:00 到新娘家'],
+          ['08:00', '新郎家：伴郎、婚车车队（主车+副车+摄像车）、摄像师到位', '车队到达前完成婚车装饰（手捧花、胸花）'],
+          ['08:15–08:30', '新郎吃早餐、整理房间，新郎及伴郎做发型与集合', '摄影/摄像与新郎交流当天安排'],
+          ['09:00', '新郎换衣出发接亲，备齐进门红包与香烟', '伴郎协调车辆排序与途中联络'],
+          ['10:00', '车队到达女方家（到达前 10 分钟通知伴娘，到达时放鞭炮）', '伴娘做好拦门准备'],
+          ['10:00–11:00', '叫门抢亲：敲门、盘问、塞红包、拦门游戏；单腿下跪献捧花、喂吃甜汤', '女方提前备好甜品与拦门道具，摄影摄像抓拍关键镜头'],
+        ],
+      },
+      {
+        group: '午饭、出门与新房仪式（11:00–15:30）',
+        rows: [
+          ['11:00–12:30', `午饭（${noon}）`, '可安排司仪简要主持，新人及亲友用餐补充体力'],
+          ['12:30–13:00', '出门：新娘妈妈给新娘换上新鞋，与女方父母道别出发', '随队带齐晚宴婚纱、敬酒服、备用衣物、出门鞋伞包及火囱等物品'],
+          ['14:00–15:30', '到达新房：爆竹迎接，男方亲戚拦门习俗（铺麻袋、洗脸盆毛巾等）', '新人入门前婆婆回避；随后向新郎父母敬茶、送嫁被（2 条嫁被、2 对枕头提前放床上），父母回赠红包并拍新家仪式'],
+        ],
+      },
+      {
+        group: '酒店外景、彩排与晚宴（15:30–20:00）',
+        rows: [
+          ['15:30–16:00', `前往${venue}：新人稍作休息，新娘换主婚纱，拍外景并安排仪式彩排`, '到达酒店后由司仪组织走位与流程彩排'],
+          ['16:00–17:00', '酒店现场准备：与酒店对接放置喜糖盒、酒水饮料（自备茅台、五粮液等）', '安排专人管家负责烟酒摆放；婚庆布置好舞台、签到本与签到笔'],
+          ...(e.venueMode === 'split' ? [['约 30–45 分钟', `转场前往${splitVenue}`, '宁波市内酒店间参考车程，具体耗时以最终选定酒店为准']] : []),
+          ['17:08', '新人在宴会厅门口迎宾，来宾签到合影', '伴郎伴娘引导宾客签到、入席'],
+          ['17:30–20:00', '晚宴正式开始：新人进场、交换戒指、证婚人及双方父母致辞、交杯酒', '随后新人退场、上菜开席（可短暂休息进餐）；换敬酒服依次敬酒、抽奖互动；结束送宾'],
+          ...(e.plan === 'next' ? [['次日 11:30', `女方宴席（${e.tables === '' ? '桌数待定' : `约 ${e.tables} 桌`}）`, '若前日布置保留到次日，需提前与酒店及婚庆确认拆除时间']] : []),
+        ],
+      },
+    ];
+  }
+
+  function viewSchedule() {
+    const e = M.effective(state);
+    return `${head(3, '晚宴流程参考时间表，时间已预设为参考，具体以酒店与婚庆最终确认为准。', tag('仅供参考'))}
+    <p class="note" style="margin-top:12px">婚礼当天 ${M.fmtDate(R.weddingDate(state))} · 包含新郎方、新娘方与工作人员配合细节，仅供参考。</p>
+    ${eveningScheduleGroups(e).map(g => `<section class="q"><h3>${g.group}</h3>
+      ${g.rows.map(([t, a, b]) => `<div class="ref-row"><b>${t}</b><div><p>${a}</p><p class="sub">${b}</p></div></div>`).join('')}
+    </section>`).join('')}`;
+  }
+
+  function viewGroom() {
+    return `${head(4, '男方目前的基本计划。')}
+    <article class="plan"><h3>婚礼当天午宴 ${tag('基本计划', true)}</h3>
+      <dl class="kv"><dt>桌数</dt><dd>10–15 桌，男方另办</dd><dt>餐标</dt><dd>3,500–4,000 元／桌</dd><dt>酒水</dt><dd>自备五粮液</dd></dl></article>
+    <article class="plan"><h3>婚礼当天主晚宴 ${tag('基本计划', true)}</h3>
+      <dl class="kv"><dt>桌数</dt><dd>50 桌，同婚礼酒店（已含女方当天约 30 桌；未到场亲友另设女方宴席约 30 桌，两批不重复）</dd><dt>餐标</dt><dd>目标约 8,000 元／桌</dd><dt>酒水</dt><dd>自备茅台</dd></dl></article>`;
+  }
+
+  function viewOverview() {
+    const rep = M.report(M.effective(state), today());
+    const blocks = rep.sections.map(s => `<section class="block"><h3>${s.title}</h3>${s.list
+      ? `<ul class="todo">${s.list.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : lines(s.rows)}</section>`).join('');
+    return `${head(5, '')}
+    <section class="block"><h3>三天安排</h3>
+    ${rep.days.map(d => `<article class="day" data-day="${d.key}"><h4>${d.label}<span>${d.dateText}</span></h4>${lines(d.items)}</article>`).join('')}</section>
+    ${blocks}
+    <div class="out"><button class="primary" data-act="image">生成图片</button><button class="secondary" data-act="copy">复制文字</button></div>
+    <button class="ghost" data-act="reset" style="margin:6px auto 0;display:block">${confirmReset ? '再次点击确认清空所有填写' : '恢复默认 / 清空重填'}</button>
+    <p class="status" id="status">${esc(copyStatus) || (saved ? '已保存在本机浏览器。' : '本机浏览器无法保存，关闭页面后选择会丢失，请先生成图片或复制文字。')}</p>`;
+  }
+
+  const VIEWS = [viewEve, viewBanquet, viewHotels, viewSchedule, viewGroom, viewOverview];
+
+  function render(enter) {
+    const nav = document.getElementById('steps');
+    nav.innerHTML = STEPS.map((s, i) => `<button data-go="${i}"${i === step ? ' aria-current="step"' : ''}>${s}</button>`).join('');
+    const main = document.getElementById('main');
+    main.classList.toggle('enter', !!enter);
+    main.innerHTML = VIEWS[step]();
+    nav.querySelector('[aria-current]').scrollIntoView({ inline: 'center', block: 'nearest' });
+    document.getElementById('prev').disabled = step === 0;
+    document.getElementById('next').textContent = step === 5 ? '回到第一项' : `下一项：${STEPS[step + 1]}`;
+  }
+
+  function go(i) {
+    step = i; copyStatus = ''; confirmReset = false;
+    try { history.replaceState(null, '', `#step-${i + 1}`); } catch (_) { /* file:// in some browsers */ }
+    render(true);
+    window.scrollTo(0, 0);
+  }
+
+  function today() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  }
+
+  // ---------- output: image + text, both from M.report ----------
+  const SERIF = '"Songti SC","STSong","Noto Serif SC","Source Han Serif SC",serif';
+  const SANS = '"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif';
+  const C = { paper: '#f5ede0', card: '#fffaf2', ink: '#2a211c', soft: 'rgba(42,33,28,.62)', red: '#a8321f', gold: '#b48a4f', goldInk: '#7d5a2a', line: 'rgba(42,33,28,.16)' };
+  const NO_START = '，。、；：！？）》」』”’%,.;:!?)';
+  const NO_END = '（《「『“‘(';
+
+  function wrap(ctx, str, maxW) {
+    const tokens = String(str).match(/[A-Za-z0-9.,:%~\-–／/]+|\s+|[\s\S]/gu) || [];
+    const out = [];
+    let cur = '';
+    const fits = s => ctx.measureText(s).width <= maxW;
+    for (const t of tokens) {
+      if (fits(cur + t) || NO_START.includes(t[0])) { cur += t; continue; }
+      if (!cur || !fits(t)) {
+        for (const ch of t) { if (cur && !fits(cur + ch) && !NO_START.includes(ch)) { out.push(cur); cur = ''; } cur += ch; }
+        continue;
+      }
+      let carry = '';
+      while (cur && NO_END.includes(cur[cur.length - 1])) { carry = cur[cur.length - 1] + carry; cur = cur.slice(0, -1); }
+      out.push(cur.trimEnd());
+      cur = carry + t.trimStart();
+    }
+    if (cur.trim()) out.push(cur.trimEnd());
+    return out.length ? out : [''];
+  }
+
+  function paint(ctx, rep, draw) {
+    const W = 1080, X = 84, IW = W - X * 2;
+    const font = (size, weight, fam) => { ctx.font = `${weight || 400} ${size}px ${fam || SANS}`; };
+    const fill = (t, x, y, color, align) => { if (!draw) return; ctx.fillStyle = color; ctx.textAlign = align || 'left'; ctx.fillText(t, x, y); };
+    const hline = (x1, x2, y, color, dash) => {
+      if (!draw) return;
+      ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.setLineDash(dash || []);
+      ctx.beginPath(); ctx.moveTo(x1, y); ctx.lineTo(x2, y); ctx.stroke(); ctx.restore();
+    };
+    const pill = (t, x, y) => { // x = left, y = baseline of 30px text
+      font(22); const w = ctx.measureText(t).width + 20;
+      if (draw) {
+        ctx.save(); ctx.fillStyle = 'rgba(180,138,79,.10)'; ctx.fillRect(x, y - 27, w, 36);
+        ctx.strokeStyle = C.gold; ctx.lineWidth = 1.5; ctx.strokeRect(x, y - 27, w, 36); ctx.restore();
+        fill(t, x + 10, y - 2, C.goldInk);
+      }
+      return w;
+    };
+    const pillW = t => { font(22); return ctx.measureText(t).width + 20; };
+
+    function rows(list, x, w, y) {
+      const LH = 46;
+      list.forEach((r, i) => {
+        if (i) hline(x, x + w, y - 4, C.line, [3, 6]);
+        y += 14;
+        font(30); const lw = ctx.measureText(r.label).width;
+        font(30, 600); const vw = ctx.measureText(r.value).width;
+        const tw = r.tag ? pillW(r.tag) + 12 : 0;
+        if (lw + 28 + vw + tw <= w) {
+          y += 34;
+          font(30); fill(r.label, x, y, C.soft);
+          if (r.tag) pill(r.tag, x + w - tw + 12, y);
+          font(30, 600); fill(r.value, x + w - tw, y, C.ink, 'right');
+          y += LH - 34;
+        } else {
+          font(30);
+          for (const l of wrap(ctx, r.label, w)) { y += LH; fill(l, x, y - 12, C.soft); }
+          font(30, 600);
+          const vl = r.value ? wrap(ctx, r.value, w) : [];
+          vl.forEach(l => { y += LH; fill(l, x, y - 12, C.ink); });
+          if (r.tag) {
+            const last = vl.length ? ctx.measureText(vl[vl.length - 1]).width : -12;
+            if (vl.length && last + 12 + tw <= w) pill(r.tag, x + last + 12, y - 12);
+            else { y += LH; pill(r.tag, x, y - 12); }
+          }
+        }
+        y += 10;
+      });
+      return y;
+    }
+
+    function card(y, body) {
+      const h = body(y + 28, false) - y + 18;
+      if (draw) {
+        ctx.fillStyle = C.card; ctx.fillRect(X, y, IW, h);
+        ctx.strokeStyle = C.line; ctx.lineWidth = 2; ctx.strokeRect(X, y, IW, h);
+        ctx.fillStyle = C.red; ctx.fillRect(X, y, 8, h);
+        body(y + 28, true);
+      }
+      return y + h;
+    }
+
+    function title(t, y) {
+      y += 70; font(38, 700, SERIF); fill(t, X, y, C.red);
+      hline(X, X + IW, y + 20, C.gold); return y + 34;
+    }
+
+    if (draw) {
+      const H = ctx.canvas.height;
+      ctx.fillStyle = C.paper; ctx.fillRect(0, 0, W, H);
+      const g1 = ctx.createRadialGradient(160, 0, 0, 160, 0, 700); g1.addColorStop(0, 'rgba(168,50,31,.08)'); g1.addColorStop(1, 'rgba(168,50,31,0)');
+      ctx.fillStyle = g1; ctx.fillRect(0, 0, W, H);
+      const g2 = ctx.createRadialGradient(W, H * .3, 0, W, H * .3, 600); g2.addColorStop(0, 'rgba(180,138,79,.12)'); g2.addColorStop(1, 'rgba(180,138,79,0)');
+      ctx.fillStyle = g2; ctx.fillRect(0, 0, W, H);
+      ctx.strokeStyle = C.gold; ctx.lineWidth = 2; ctx.strokeRect(28, 28, W - 56, H - 56);
+      ctx.lineWidth = 1; ctx.strokeRect(38, 38, W - 76, H - 76);
+      ctx.save(); ctx.translate(W / 2, 128); ctx.rotate(Math.PI / 4);
+      ctx.strokeStyle = C.red; ctx.lineWidth = 3; ctx.strokeRect(-34, -34, 68, 68); ctx.restore();
+      font(40, 400, SERIF); ctx.textBaseline = 'alphabetic'; fill('囍', W / 2, 142, C.red, 'center');
+    }
+    let y = 250;
+    font(64, 700, SERIF); fill(rep.title, W / 2, y, C.ink, 'center');
+    y += 58;
+    font(28); fill(rep.generated ? `生成于 ${rep.generated}` : '', W / 2, y, C.soft, 'center');
+    y += 34;
+    if (draw) { ctx.fillStyle = C.red; ctx.fillRect(W / 2 - 30, y, 60, 4); }
+    y += 4;
+
+    y = title('三天安排', y);
+    for (const d of rep.days) {
+      y += 22;
+      y = card(y, (yy, dr) => {
+        const saveDraw = draw; draw = dr;
+        yy += 40; font(40, 700, SERIF); fill(d.label, X + 36, yy, C.ink);
+        font(30, 600); fill(d.dateText, X + IW - 32, yy, C.red, 'right');
+        yy += 22; hline(X + 36, X + IW - 32, yy, C.line);
+        yy = rows(d.items, X + 36, IW - 68, yy + 4);
+        draw = saveDraw; return yy;
+      });
+    }
+
+    for (const s of rep.sections.filter(s => s.image !== false)) {
+      y = title(s.title, y);
+      if (s.list) {
+        font(30);
+        for (const item of s.list) {
+          const ls = wrap(ctx, item, IW - 44);
+          y += 22;
+          if (draw) { ctx.strokeStyle = C.gold; ctx.lineWidth = 2; ctx.strokeRect(X + 2, y + 12, 18, 18); }
+          ls.forEach(l => { y += 44; fill(l, X + 44, y - 8, C.ink); });
+        }
+      } else {
+        y = rows(s.rows, X, IW, y + 8);
+      }
+    }
+    y += 60;
+    font(24); fill('婚礼安排确认单 · 家人填写', W / 2, y, C.soft, 'center');
+    return y + 76;
+  }
+
+  function renderImage(rep) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080; canvas.height = 10;
+    const ctx = canvas.getContext('2d');
+    canvas.height = Math.ceil(paint(ctx, rep, false));
+    paint(ctx, rep, true);
+    return canvas.toDataURL('image/png');
+  }
+
+  function showImage() {
+    const rep = M.report(M.effective(state), today());
+    const url = renderImage(rep);
+    const sheet = document.createElement('div');
+    sheet.className = 'sheet'; sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-label', '生成的图片');
+    sheet.innerHTML = `<div class="bar"><b>长按图片保存或发送</b><button data-close>关闭</button></div>
+      <img alt="婚礼安排确认单图片" src="${url}">
+      <a download="婚礼安排.png" href="${url}">电脑上点此下载图片</a>`;
+    sheet.addEventListener('click', e => { if (e.target.closest('[data-close]') || e.target === sheet) sheet.remove(); });
+    document.body.appendChild(sheet);
+    sheet.querySelector('[data-close]').focus();
+  }
+
+  function copyText() {
+    const txt = M.toText(M.report(M.effective(state), today()));
+    const done = ok => {
+      copyStatus = ok ? '已复制，可以粘贴到微信。' : '';
+      const status = document.getElementById('status');
+      if (ok) { status.textContent = copyStatus; return; }
+      status.innerHTML = '无法自动复制，请长按下面的文字全选复制：<textarea readonly rows="8"></textarea>';
+      const ta = status.querySelector('textarea'); ta.value = txt; ta.focus(); ta.select();
+    };
+    const legacy = () => {
+      const ta = document.createElement('textarea');
+      ta.value = txt; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:absolute;left:-9999px;top:0';
+      document.body.appendChild(ta); ta.select();
+      let ok = false; try { ok = document.execCommand('copy'); } catch (_) { ok = false; }
+      ta.remove(); done(ok);
+    };
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(txt).then(() => done(true), legacy);
+    else legacy();
+  }
+
+  // ---------- events ----------
+  document.getElementById('steps').addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (b) go(+b.dataset.go); });
+  document.getElementById('prev').addEventListener('click', () => go(Math.max(0, step - 1)));
+  document.getElementById('next').addEventListener('click', () => go(step === 5 ? 0 : step + 1));
+
+  const main = document.getElementById('main');
+  main.addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    const d = b.dataset;
+    if (d.set) apply(d.set === 'plan' ? R.choosePlan(state, d.v) : M.set(state, d.set, d.v));
+    else if (d.toggle) apply(M.set(state, d.toggle, !get(d.toggle)));
+    else if (d.pick) apply(M.set(state, d.pick, get(d.pick) === d.v ? '' : d.v));
+    else if (d.date !== undefined) apply(R.pickDate(state, d.date));
+    else if (d.bump) apply(M.set(state, 'tables', String(Math.max(1, (state.tables === '' ? 30 : +state.tables) + +d.bump))));
+    else if (d.act === 'image') showImage();
+    else if (d.act === 'copy') copyText();
+    else if (d.act === 'reset') {
+      if (!confirmReset) { confirmReset = true; render(false); return; }
+      confirmReset = false;
+      try { localStorage.removeItem(KEY); localStorage.removeItem(KEY_V3); } catch (_) {}
+      state = M.initial(); save(); copyStatus = '已恢复默认设置。'; render(false);
+    }
+  });
+  main.addEventListener('input', e => {
+    const el = e.target;
+    if (!el.dataset || !el.dataset.k) return;
+    if ('num' in el.dataset) { const clean = el.value.replace(/\D/g, '').slice(0, 6); if (clean !== el.value) el.value = clean; }
+    state = M.set(state, el.dataset.k, el.value);
+    save();
+  });
+  main.addEventListener('change', e => {
+    if (e.target.id === 'date-other') apply(R.pickDate(state, e.target.value));
+    else if (e.target.id === 'hotel-view') { hotelTab = e.target.value; render(false); }
+  });
+  window.addEventListener('hashchange', () => {
+    const n = +(location.hash.match(/^#step-(\d)$/) || [])[1];
+    if (n >= 1 && n <= 6 && n - 1 !== step) go(n - 1);
+  });
+
+  boot();
+  render(true);
+})();
+</script>
+</body>
+</html>
